@@ -7,8 +7,6 @@ local patch = crossplane.util.patch;
 local xversion = crossplane.util.version;
 local resource = crossplane.util.resource;
 
-local addProperty = crossplane.util.version.addParameterProperty;
-
 {
   local root = self,
 

@@ -5,11 +5,11 @@
       "source": {
         "git": {
           "remote": "https://github.com/jsonnet-libs/crossplane-libsonnet.git",
-          "subdir": "crossplane/1.9"
+          "subdir": "crossplane/1.14"
         }
       },
-      "version": "9168d72c293523bc83bf3c123368e27302c00bc4",
-      "sum": "+iCU59FgHjQ3ZAUkxwsf7dO5R4svT1LCg8+v0zozwBs=",
+      "version": "b8c879544f4292f788770373c900f9fde696a23b",
+      "sum": "40w1wppQmnIUUMoWAY5sd3rWl6HwKhIuSb/8XNBjJCY=",
       "name": "crossplane"
     }
   ],

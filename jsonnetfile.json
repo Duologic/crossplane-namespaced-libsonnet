@@ -5,7 +5,7 @@
       "source": {
         "git": {
           "remote": "https://github.com/jsonnet-libs/crossplane-libsonnet.git",
-          "subdir": "crossplane/1.9"
+          "subdir": "crossplane/1.14"
         }
       },
       "version": "main",
