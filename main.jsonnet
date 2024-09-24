@@ -62,6 +62,7 @@ local resource = crossplane.util.resource;
         crd.spec.names.singular,
         self.fakeInstance,
       )
+      + resource.withExternalNamePatch()
       + resource.withPatchesMixin(
         root.createPatches(spec.properties)
       ),
