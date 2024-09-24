@@ -1,4 +1,4 @@
-local crossplane = import 'crossplane/main.libsonnet';
+local crossplane = import './vendor/github.com/jsonnet-libs/crossplane-libsonnet/crossplane/1.14/main.libsonnet';
 
 local xrd = crossplane.apiextensions.v1.compositeResourceDefinition;
 local composition = crossplane.apiextensions.v1.composition;
