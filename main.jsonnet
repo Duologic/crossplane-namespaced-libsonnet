@@ -46,7 +46,8 @@ local resource = crossplane.util.resource;
         spec+: {
           properties+: {
             parameters+:
-              {
+              spec
+              + {
                 properties+: {
                   externalName: {
                     type: 'string',
@@ -58,8 +59,7 @@ local resource = crossplane.util.resource;
                     |||,
                   },
                 },
-              }
-              + spec,
+              },
           },
         },
       }),
