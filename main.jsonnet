@@ -45,7 +45,21 @@ local resource = crossplane.util.resource;
       + xversion.withPropertiesMixin({
         spec+: {
           properties+: {
-            parameters+: spec,
+            parameters+:
+              {
+                properties+: {
+                  externalName: {
+                    type: 'string',
+                    description: |||
+                      The name of the managed resource inside the Provider.
+                      By default Providers give external resources the same name as the Kubernetes object. A provider uses the external name to lookup a managed resource in an external system. The provider looks up the resource in the external system to determine if it exists, and if it matches the managed resource’s desired state. If the provider can’t find the resource, it creates it.
+
+                      Docs: https://docs.crossplane.io/latest/concepts/managed-resources/#naming-external-resources
+                    |||,
+                  },
+                },
+              }
+              + spec,
           },
         },
       }),
