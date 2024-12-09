@@ -123,7 +123,7 @@ local resource = crossplane.util.resource;
       + composition.spec.compositeTypeRef.withKind(
         self.definition.spec.names.kind
       )
-      + composition.spec.withMode('pipeline')
+      + composition.spec.withMode('Pipeline')
       + composition.spec.withPipeline([
         composition.spec.pipeline.functionRef.withName('function-patch-and-transform')
         + composition.spec.pipeline.withStep('patch-and-transform')
