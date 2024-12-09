@@ -1,4 +1,5 @@
-local crossplane = import './vendor/github.com/jsonnet-libs/crossplane-libsonnet/crossplane/1.14/main.libsonnet';
+local crossplane = import 'github.com/jsonnet-libs/crossplane-libsonnet/crossplane/1.17/main.libsonnet';
+local fn = import 'github.com/jsonnet-libs/crossplane-libsonnet/function-patch-and-transform/0.7/main.libsonnet';
 
 local xrd = crossplane.apiextensions.v1.compositeResourceDefinition;
 local composition = crossplane.apiextensions.v1.composition;
@@ -27,8 +28,6 @@ local resource = crossplane.util.resource;
       std.objectFields(properties),
       []
     ),
-
-  test: self.fromCRD(crd=import 'crd.json'),
 
   fromCRD(crd, versionName=''):: {
     local this = self,
@@ -71,15 +70,26 @@ local resource = crossplane.util.resource;
       },
     },
 
+    local fnresources =
+      fn.pt.v1beta1.resources
+      + {
+        new(): {
+          apiVersion: 'pt.fn.crossplane.io/v1beta1',
+          kind: 'Resources',
+        },
+      },
     resource::
-      resource.new(
-        crd.spec.names.singular,
-        self.fakeInstance,
-      )
-      + resource.withExternalNamePatch()
-      + resource.withPatchesMixin(
-        root.createPatches(spec.properties)
-      ),
+      fnresources.new()
+      + fnresources.withResources([
+        resource.new(
+          crd.spec.names.singular,
+          self.fakeInstance,
+        )
+        + resource.withExternalNamePatch()
+        + resource.withPatchesMixin(
+          root.createPatches(spec.properties)
+        ),
+      ]),
 
     local compositionName = crd.spec.names.singular + '-namespaced',
 
@@ -113,8 +123,13 @@ local resource = crossplane.util.resource;
       + composition.spec.compositeTypeRef.withKind(
         self.definition.spec.names.kind
       )
-      + composition.spec.withResourcesMixin([
-        self.resource,
+      + composition.spec.withMode('pipeline')
+      + composition.spec.withPipeline([
+        composition.spec.pipeline.functionRef.withName('function-patch-and-transform')
+        + composition.spec.pipeline.withStep('patch-and-transform')
+        + composition.spec.pipeline.withInput(
+          self.resource,
+        ),
       ]),
   },
 }
